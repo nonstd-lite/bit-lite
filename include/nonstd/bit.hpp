@@ -1056,13 +1056,9 @@ inline T as_native_endian( T v ) bit_noexcept
 
 }} // namespace nonstd::bit
 
-#endif // !bit_CONFIG_STRICT
-
 //
 // Make extensions available in namespace nonstd:
 //
-
-#if !bit_CONFIG_STRICT
 
 namespace nonstd
 {
