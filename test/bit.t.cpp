@@ -338,9 +338,7 @@ CASE( "endian: little differs from big (corner-case when all scalars have size o
 
 CASE( "to_big_endian(): convert native, or little or big endian specified unsigned to big endian" " [bit.endian.extension]" )
 {
-#if bit_USES_STD_BIT
-    EXPECT( !!"Extension to_big_endian() not available (bit_USES_STD_BIT)" );
-#elif bit_CONFIG_STRICT
+#if bit_CONFIG_STRICT
     EXPECT( !!"Extension to_big_endian() not available (bit_CONFIG_STRICT)" );
 #else
     EXPECT( to_big_endian( uint8_t(0x5eu)                       ) == 0x5eu );
@@ -359,9 +357,7 @@ CASE( "to_big_endian(): convert native, or little or big endian specified unsign
 
 CASE( "to_little_endian(): convert native, or little or big endian specified unsigned to little endian" " [bit.endian.extension]" )
 {
-#if bit_USES_STD_BIT
-    EXPECT( !!"Extension to_little_endian() not available (bit_USES_STD_BIT)" );
-#elif bit_CONFIG_STRICT
+#if bit_CONFIG_STRICT
     EXPECT( !!"Extension to_little_endian() not available (bit_CONFIG_STRICT)" );
 #else
     EXPECT( to_little_endian( uint8_t(0x5eu)                       ) == 0x5eu );
@@ -380,9 +376,7 @@ CASE( "to_little_endian(): convert native, or little or big endian specified uns
 
 CASE( "to_native_endian(): convert native, or little or big endian specified unsigned to native endian" " [bit.endian.extension]" )
 {
-#if bit_USES_STD_BIT
-    EXPECT( !!"Extension to_native_endian() not available (bit_USES_STD_BIT)" );
-#elif bit_CONFIG_STRICT
+#if bit_CONFIG_STRICT
     EXPECT( !!"Extension to_native_endian() not available (bit_CONFIG_STRICT)" );
 #else
     EXPECT( to_native_endian( uint8_t(0x5eu)                       ) == 0x5eu );
@@ -419,9 +413,7 @@ CASE( "to_native_endian(): convert native, or little or big endian specified uns
 
 CASE( "as_big_endian(): provide native unsigned as big endian" " [bit.endian.extension]" )
 {
-#if bit_USES_STD_BIT
-    EXPECT( !!"Extension as_big_endian() not available (bit_USES_STD_BIT)" );
-#elif bit_CONFIG_STRICT
+#if bit_CONFIG_STRICT
     EXPECT( !!"Extension as_big_endian() not available (bit_CONFIG_STRICT)" );
 #else
     if (  endian::native == endian::big )
@@ -445,9 +437,7 @@ CASE( "as_big_endian(): provide native unsigned as big endian" " [bit.endian.ext
 
 CASE( "as_little_endian(): provide native unsigned as little endian" " [bit.endian.extension]" )
 {
-#if bit_USES_STD_BIT
-    EXPECT( !!"Extension as_little_endian() not available (bit_USES_STD_BIT)" );
-#elif bit_CONFIG_STRICT
+#if bit_CONFIG_STRICT
     EXPECT( !!"Extension as_little_endian() not available (bit_CONFIG_STRICT)" );
 #else
     if (  endian::native == endian::big )
@@ -471,9 +461,7 @@ CASE( "as_little_endian(): provide native unsigned as little endian" " [bit.endi
 
 CASE( "as_native_endian(): provide native unsigned as native endian (identity)" " [bit.endian.extension]" )
 {
-#if bit_USES_STD_BIT
-    EXPECT( !!"Extension as_native_endian() not available (bit_USES_STD_BIT)" );
-#elif bit_CONFIG_STRICT
+#if bit_CONFIG_STRICT
     EXPECT( !!"Extension as_native_endian() not available (bit_CONFIG_STRICT)" );
 #else
         EXPECT( as_native_endian( uint8_t (0x5eu )  ) == 0x5eu );
