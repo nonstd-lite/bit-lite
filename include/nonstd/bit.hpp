@@ -115,6 +115,7 @@ namespace nonstd
 // Additional includes needed for extensions:
 
 #include <climits>      // CHAR_BIT
+#include <cstdint>      // std::uint8_t etc.
 
 // Macros needed for extensions:
 
