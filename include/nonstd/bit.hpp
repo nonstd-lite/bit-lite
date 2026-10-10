@@ -24,6 +24,16 @@
 #define bit_BIT_NONSTD   1
 #define bit_BIT_STD      2
 
+// tweak header support:
+
+#if defined(__has_include) && __has_include(<nonstd/bit.tweak.hpp>)
+# include <nonstd/bit.tweak.hpp>
+# define bit_HAVE_TWEAK_HEADER  1
+#else
+# define bit_HAVE_TWEAK_HEADER  0
+//# pragma message("bit.hpp: Note: Tweak header not supported.")
+#endif
+
 #if !defined( bit_CONFIG_SELECT_BIT )
 # define bit_CONFIG_SELECT_BIT  ( bit_HAVE_STD_BIT ? bit_BIT_STD : bit_BIT_NONSTD )
 #endif

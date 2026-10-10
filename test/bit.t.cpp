@@ -470,5 +470,14 @@ CASE( "as_native_endian(): provide native unsigned as native endian (identity)" 
 #endif
 }
 
+CASE( "tweak header: reads tweak header if supported " "[tweak]" )
+{
+#if bit_HAVE_TWEAK_HEADER
+    EXPECT( BIT_TWEAK_VALUE == 42 );
+#else
+    EXPECT( !!"Tweak header is not available (bit_HAVE_TWEAK_HEADER: 0)." );
+#endif
+}
+
 // g++ -std=c++11 -I../include -o bit.t.exe bit.t.cpp && bit.t.exe
 // cl -EHsc -I../include bit.t.cpp && bit.t.exe
