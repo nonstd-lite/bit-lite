@@ -15,6 +15,7 @@
     - [Documentation of standard header `<bit>`](#documentation-of-standard-header-bit)
     - [Non-standard extensions](#non-standard-extensions)
     - [Configuration](#configuration)
+      - [Tweak header](#tweak-header)
       - [Standard selection macro](#standard-selection-macro)
       - [Select C++20/C++23 standard `<bit>` or nonstd `<bit>`](#select-c20c23-standard-bit-or-nonstd-bit)
       - [Strict C++20/C++23 mode](#strict-c20c23-mode)
@@ -102,6 +103,10 @@ Depending on the compiler and C++-standard used, *bit lite* behaves less or more
 | &nbsp;             | template&lt;class T><br>T **as_native_endian**(T v) | <br>identity |
 
 ### Configuration
+
+#### Tweak header
+
+If the compiler supports [`__has_include()`](https://en.cppreference.com/w/cpp/preprocessor/include), *bit lite* supports the [tweak header](https://vector-of-bool.github.io/2020/10/04/lib-configuration.html) mechanism. Provide your *tweak header* as `nonstd/bit.tweak.hpp` in a folder in the include-search-path. In the tweak header, provide definitions as documented below, like `#define bit_CPLUSPLUS 201103L`.
 
 #### Standard selection macro
 
