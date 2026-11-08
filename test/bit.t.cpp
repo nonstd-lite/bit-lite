@@ -218,6 +218,8 @@ CASE( "bit_width(): x == 0, 0; otherwise one plus the base-2 logarithm of x, wit
 // p3104 - Bit permutations
 //
 
+#if bit_HAVE_PERMUTATION
+
 CASE( "bit_reverse(): reverse bits" " [bit.permute]" )
 {
     EXPECT( bit_reverse( uint32_t(0x80000000) ) == 0x00000001 );
@@ -250,6 +252,8 @@ CASE( "bit_expand(): distribute bits" " [bit.permute]" )
 {
     EXPECT( bit_expand( uint32_t(0xf), uint32_t(0x5) ) == 0x5 );
 }
+
+#endif // bit_HAVE_PERMUTATION
 
 // End p3104 - Bit permutations
 

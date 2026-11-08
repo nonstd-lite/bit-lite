@@ -89,6 +89,8 @@
 # define bit_HAVE_BYTESWAP  0
 #endif
 
+#define bit_HAVE_PERMUTATION  0
+
 // Provide bit functions in namespace nonstd :
 
 namespace nonstd
@@ -197,6 +199,8 @@ struct normalized_uint_type
 #endif // bit_CONFIG_STRICT
 
 #else // bit_USES_STD_BIT
+
+#define bit_HAVE_PERMUTATION  1
 
 // half-open range [lo..hi):
 #define bit_BETWEEN( v, lo, hi ) ( (lo) <= (v) && (v) < (hi) )
