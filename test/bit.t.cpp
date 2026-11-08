@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2020-2025 Martin Moene
+// Copyright (c) 2020-2026 Martin Moene
 //
 // https://github.com/martinmoene/bit-lite
 //
@@ -205,6 +205,45 @@ CASE( "bit_width(): x == 0, 0; otherwise one plus the base-2 logarithm of x, wit
     EXPECT( bit_width( 8u ) == 4u );
 }
 
+//
+// p3104 - Bit permutations
+//
+
+CASE( "bit_reverse(): reverse bits" " [bit.permute]" )
+{
+    EXPECT( bit_reverse( uint32_t(0x80000000) ) == 0x00000001 );
+    EXPECT( bit_reverse( uint32_t(0x08000000) ) == 0x00000010 );
+    EXPECT( bit_reverse( uint32_t(0x00800000) ) == 0x00000100 );
+    EXPECT( bit_reverse( uint32_t(0x00080000) ) == 0x00001000 );
+    EXPECT( bit_reverse( uint32_t(0x00008000) ) == 0x00010000 );
+    EXPECT( bit_reverse( uint32_t(0x00000800) ) == 0x00100000 );
+    EXPECT( bit_reverse( uint32_t(0x00000080) ) == 0x01000000 );
+    EXPECT( bit_reverse( uint32_t(0x00000008) ) == 0x10000000 );
+
+    EXPECT( bit_reverse( uint32_t(0x800f1000) ) == 0x0008f001 );
+    EXPECT( bit_reverse( uint32_t(0x00001234) ) == 0x2c480000 );
+}
+
+CASE( "bit_repeat(): repeat bit pattern" " [bit.permute]" )
+{
+    EXPECT( bit_repeat( uint32_t(0x1), 1 ) == 0xffffffff );
+    EXPECT( bit_repeat( uint32_t(0x1), 2 ) == 0x55555555 );
+    EXPECT( bit_repeat( uint32_t(0x1), 3 ) == 0x49249249 );
+    EXPECT( bit_repeat( uint32_t(0xc), 4 ) == 0xcccccccc );
+}
+
+CASE( "bit_compress(): pack bits" " [bit.permute]" )
+{
+    EXPECT( bit_compress( uint32_t(0xf), uint32_t(0x5) ) == 0x3 );
+}
+
+CASE( "bit_expand(): distribute bits" " [bit.permute]" )
+{
+    EXPECT( bit_expand( uint32_t(0xf), uint32_t(0x5) ) == 0x5 );
+}
+
+// End p3104 - Bit permutations
+
 CASE( "rotl(): r is 0, x; if r is positive, (x << r) | (x >> (N - r)); if r is negative, rotr(x, -r)" " [bit.rotate]" )
 {
     uint8_t i = 29; // 0b00011101;
@@ -326,32 +365,6 @@ CASE( "popcount(): the number of 1 bits in the value of x" " [bit.count]" )
 
     EXPECT( popcount( unsigned(-1) ) == static_cast<int>( CHAR_BIT * sizeof(unsigned) ) );
 }
-
-//
-// p3104 - Bit permutations
-//
-
-CASE( "bit_reverse(): reverse bits" " [bit.permute]" )
-{
-    EXPECT( bit_reverse( uint32_t{0x00001234} ) == 0x24c80000 );
-}
-
-CASE( "bit_repeat(): repeat bit pattern" " [bit.permute]" )
-{
-    EXPECT( bit_repeat( uint32_t{0xc}, 4 ) == 0xcccccccc );
-}
-
-CASE( "bit_compress(): pack bits" " [bit.permute]" )
-{
-    EXPECT( bit_compress( uint32_t{0xf}, uint32_t{0x5} ) == 0x3 );
-}
-
-CASE( "bit_expand(): distribute bits" " [bit.permute]" )
-{
-    EXPECT( bit_expand( uint32_t{0xf}, uint32_t{0x5} ) == 0x5 );
-}
-
-// End p3104 - Bit permutations
 
 CASE( "endian: little differs from big (corner-case when all scalars have size of 1 byte)" " [bit.endian]" )
 {

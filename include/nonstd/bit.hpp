@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2020-2025 Martin Moene
+// Copyright (c) 2020-2026 Martin Moene
 //
 // https://github.com/martinmoene/bit-lite
 //
@@ -408,6 +408,18 @@ bit_constexpr T bitmask( int i )
 #endif
 }
 
+template< typename T >
+bit_constexpr bool to_bool( T x )
+{
+    return static_cast<bool>( x );
+}
+
+template< typename T >
+bit_constexpr int to_int( T x )
+{
+    return static_cast<int>( x );
+}
+
 // C++11 emulation:
 
 namespace std11 {
@@ -536,6 +548,13 @@ template< class T > constexpr int countl_one(T x) noexcept;
 template< class T > constexpr int countr_zero(T x) noexcept;
 template< class T > constexpr int countr_one(T x) noexcept;
 template< class T > constexpr int popcount(T x) noexcept;
+
+// ??.?.?, permutation - p3104
+
+template< class T > constexpr T bit_reverse(T x) noexcept;
+template< class T > constexpr T bit_repeat(T x, int length);
+template< class T > constexpr T bit_compress(T x, T m) noexcept;
+template< class T > constexpr T bit_expand(T x, T m) noexcept;
 
 #endif // 0: For reference
 
@@ -838,9 +857,16 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_constexpr T bit_reverse( T x ) bit_noexcept
+bit_constexpr14 T bit_reverse( T x ) bit_noexcept
 {
-    return x;
+    T result = 0;
+    for ( int i = 0; i < std::numeric_limits<T>::digits; ++i )
+    {
+        result <<= 1;
+        result |= x & 1;
+        x >>= 1;
+    }
+    return result;
 }
 
 template< class T
@@ -848,9 +874,14 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_constexpr T bit_repeat( T x, int l )
+bit_constexpr14 T bit_repeat( T x, int length )
 {
-    return x;
+    T result = 0;
+    for ( int i = 0; i < std::numeric_limits<T>::digits; ++i )
+    {
+        result |= ((x >> (i % length)) & 1) << i;
+    }
+    return result;
 }
 
 template< class T
@@ -858,9 +889,16 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_constexpr T bit_compress( T x, T m ) bit_noexcept
+bit_constexpr14 T bit_compress( T x, T m ) bit_noexcept
 {
-    return x;
+    T result = 0;
+    for ( int i = 0, j = 0; i < std::numeric_limits<T>::digits; ++i )
+    {
+        T mask_bit = to_bool( (m >> i) & 1 );
+        result |= (mask_bit & (x >> i)) << j;
+        j += to_int( mask_bit );
+    }
+    return result;
 }
 
 template< class T
@@ -868,9 +906,16 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_constexpr T bit_expand( T x, T m ) bit_noexcept
+bit_constexpr14 T bit_expand( T x, T m ) bit_noexcept
 {
-    return x;
+    T result = 0;
+    for ( int i = 0, j = 0; i < std::numeric_limits<T>::digits; ++i )
+    {
+        T mask_bit = to_bool( (m >> i) & 1 );
+        result |= (mask_bit & (x >> j)) << i;
+        j += to_int( mask_bit );
+    }
+    return result;
 }
 
 // End p3104 - Bit permutations
