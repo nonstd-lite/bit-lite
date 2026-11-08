@@ -829,6 +829,52 @@ bit_constexpr T bit_floor(T x) bit_noexcept
         : 0;
 }
 
+//
+// p3104 - Bit permutations
+//
+
+template< class T
+    bit_ENABLE_IF_(
+        std11::is_unsigned<T>::value
+    )
+>
+bit_constexpr T bit_reverse( T x ) bit_noexcept
+{
+    return x;
+}
+
+template< class T
+    bit_ENABLE_IF_(
+        std11::is_unsigned<T>::value
+    )
+>
+bit_constexpr T bit_repeat( T x, int l )
+{
+    return x;
+}
+
+template< class T
+    bit_ENABLE_IF_(
+        std11::is_unsigned<T>::value
+    )
+>
+bit_constexpr T bit_compress( T x, T m ) bit_noexcept
+{
+    return x;
+}
+
+template< class T
+    bit_ENABLE_IF_(
+        std11::is_unsigned<T>::value
+    )
+>
+bit_constexpr T bit_expand( T x, T m ) bit_noexcept
+{
+    return x;
+}
+
+// End p3104 - Bit permutations
+
 // 26.5.8, endian
 
 #if bit_HAVE( ENUM_CLASS )
@@ -900,6 +946,11 @@ namespace nonstd
     using bit::countr_zero;
     using bit::countr_one;
     using bit::popcount;
+
+    using bit::bit_reverse;     // p3104 - bit permutations
+    using bit::bit_repeat;      // p3104 - bit permutations
+    using bit::bit_compress;    // p3104 - bit permutations
+    using bit::bit_expand;      // p3104 - bit permutations
 
     using bit::byteswap;
 

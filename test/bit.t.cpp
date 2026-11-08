@@ -327,6 +327,32 @@ CASE( "popcount(): the number of 1 bits in the value of x" " [bit.count]" )
     EXPECT( popcount( unsigned(-1) ) == static_cast<int>( CHAR_BIT * sizeof(unsigned) ) );
 }
 
+//
+// p3104 - Bit permutations
+//
+
+CASE( "bit_reverse(): reverse bits" " [bit.permute]" )
+{
+    EXPECT( bit_reverse( uint32_t{0x00001234} ) == 0x24c80000 );
+}
+
+CASE( "bit_repeat(): repeat bit pattern" " [bit.permute]" )
+{
+    EXPECT( bit_repeat( uint32_t{0xc}, 4 ) == 0xcccccccc );
+}
+
+CASE( "bit_compress(): pack bits" " [bit.permute]" )
+{
+    EXPECT( bit_compress( uint32_t{0xf}, uint32_t{0x5} ) == 0x3 );
+}
+
+CASE( "bit_expand(): distribute bits" " [bit.permute]" )
+{
+    EXPECT( bit_expand( uint32_t{0xf}, uint32_t{0x5} ) == 0x5 );
+}
+
+// End p3104 - Bit permutations
+
 CASE( "endian: little differs from big (corner-case when all scalars have size of 1 byte)" " [bit.endian]" )
 {
     EXPECT( nonstd::endian::little != nonstd::endian::big );
