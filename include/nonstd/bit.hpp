@@ -987,6 +987,7 @@ private:
 
 namespace nonstd
 {
+    // C++20
     using bit::bit_cast;
 
     using bit::has_single_bit;
@@ -1003,15 +1004,16 @@ namespace nonstd
     using bit::countr_one;
     using bit::popcount;
 
-    // p3104 - bit permutations, C++29
+    using bit::endian;
+
+    // C++23 - p1272: byteswapping
+    using bit::byteswap;
+
+    // C++29 - p3104: bit permutations
     using bit::bit_reverse;
     using bit::bit_repeat;
     using bit::bit_compress;
     using bit::bit_expand;
-
-    using bit::byteswap;
-
-    using bit::endian;
 }
 
 #endif // bit_USES_STD_BIT
