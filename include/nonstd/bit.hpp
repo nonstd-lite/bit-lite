@@ -695,7 +695,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_constexpr14 int countl_zero(T x) bit_noexcept
+bit_nodiscard bit_constexpr14 int countl_zero(T x) bit_noexcept
 {
     bit_constexpr14 int N1 = CHAR_BIT * sizeof(T) - 1;
 
@@ -713,7 +713,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_constexpr14 int countl_one(T x) bit_noexcept
+bit_nodiscard bit_constexpr14 int countl_one(T x) bit_noexcept
 {
     bit_constexpr14 int N1 = CHAR_BIT * sizeof(T) - 1;
 
@@ -731,7 +731,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_constexpr14 int countr_zero(T x) bit_noexcept
+bit_nodiscard bit_constexpr14 int countr_zero(T x) bit_noexcept
 {
     bit_constexpr14 int N = CHAR_BIT * sizeof(T);
 
@@ -749,7 +749,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_constexpr14 int countr_one(T x) bit_noexcept
+bit_nodiscard bit_constexpr14 int countr_one(T x) bit_noexcept
 {
     bit_constexpr14 int N = CHAR_BIT * sizeof(T);
 
@@ -767,7 +767,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_constexpr14 int popcount(T x) bit_noexcept
+bit_nodiscard bit_constexpr14 int popcount(T x) bit_noexcept
 {
     bit_constexpr14 int N = CHAR_BIT * sizeof(T);
 
@@ -787,7 +787,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_constexpr bool has_single_bit(T x) bit_noexcept
+bit_nodiscard bit_constexpr bool has_single_bit(T x) bit_noexcept
 {
     return x != 0 && ( x & (x - 1) ) == 0;
     // return std::popcount(x) == 1;
@@ -798,13 +798,13 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_constexpr T bit_width(T x) bit_noexcept
+bit_nodiscard bit_constexpr T bit_width(T x) bit_noexcept
 {
     return static_cast<T>(std::numeric_limits<T>::digits - countl_zero(x) );
 }
 
 template< class T >
-bit_constexpr T bit_ceil_impl( T x, std11::true_type /*case: same type*/)
+bit_nodiscard bit_constexpr T bit_ceil_impl( T x, std11::true_type /*case: same type*/)
 {
 #if bit_CPP11_OR_GREATER
     return T{1} << bit_width( T{x - 1} );
@@ -814,7 +814,7 @@ bit_constexpr T bit_ceil_impl( T x, std11::true_type /*case: same type*/)
 }
 
 template< class T >
-bit_constexpr14 T bit_ceil_impl( T x, std11::false_type /*case: integral promotion*/ )
+bit_nodiscard bit_constexpr14 T bit_ceil_impl( T x, std11::false_type /*case: integral promotion*/ )
 {
     bit_constexpr T offset_for_ub =
         static_cast<T>( std::numeric_limits<unsigned>::digits - std::numeric_limits<T>::digits );
@@ -833,7 +833,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_constexpr T bit_ceil(T x)
+bit_nodiscard bit_constexpr T bit_ceil(T x)
 {
     return ( x <= 1u )
 #if bit_CPP11_OR_GREATER
@@ -848,7 +848,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_constexpr T bit_floor(T x) bit_noexcept
+bit_nodiscard bit_constexpr T bit_floor(T x) bit_noexcept
 {
     return (x != 0)
 #if bit_CPP11_OR_GREATER
@@ -868,7 +868,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_constexpr14 T bit_reverse( T x ) bit_noexcept
+bit_nodiscard bit_constexpr14 T bit_reverse( T x ) bit_noexcept
 {
     T result = 0;
     for ( int i = 0; i < std::numeric_limits<T>::digits; ++i )
@@ -885,7 +885,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_constexpr14 T bit_repeat( T x, int length )
+bit_nodiscard bit_constexpr14 T bit_repeat( T x, int length )
 {
     T result = 0;
     for ( int i = 0; i < std::numeric_limits<T>::digits; ++i )
@@ -900,7 +900,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_constexpr14 T bit_compress( T x, T m ) bit_noexcept
+bit_nodiscard bit_constexpr14 T bit_compress( T x, T m ) bit_noexcept
 {
     T result = 0;
     for ( int i = 0, j = 0; i < std::numeric_limits<T>::digits; ++i )
@@ -917,7 +917,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_constexpr14 T bit_expand( T x, T m ) bit_noexcept
+bit_nodiscard bit_constexpr14 T bit_expand( T x, T m ) bit_noexcept
 {
     T result = 0;
     for ( int i = 0, j = 0; i < std::numeric_limits<T>::digits; ++i )
