@@ -111,6 +111,13 @@ namespace nonstd
     using std::countr_one;
     using std::popcount;
 
+#if bit_HAVE_PERMUTATION        // p3104 - bit permutations, C++29
+    using bit::bit_reverse;
+    using bit::bit_repeat;
+    using bit::bit_compress;
+    using bit::bit_expand;
+#endif
+
 #if bit_HAVE_BYTESWAP || bit_CPP23_OR_GREATER
     using std::byteswap;
 #endif
@@ -996,10 +1003,11 @@ namespace nonstd
     using bit::countr_one;
     using bit::popcount;
 
-    using bit::bit_reverse;     // p3104 - bit permutations
-    using bit::bit_repeat;      // p3104 - bit permutations
-    using bit::bit_compress;    // p3104 - bit permutations
-    using bit::bit_expand;      // p3104 - bit permutations
+    // p3104 - bit permutations, C++29
+    using bit::bit_reverse;
+    using bit::bit_repeat;
+    using bit::bit_compress;
+    using bit::bit_expand;
 
     using bit::byteswap;
 
