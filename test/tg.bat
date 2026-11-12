@@ -25,11 +25,14 @@ set unit_select=-D%unit%_CONFIG_SELECT_%UCAP%=%unit%_%UCAP%_DEFAULT
 
 set unit_config=
 
+set gcc_defines=^
+     -Dbit_CONFIG_NO_BUILTINS=0
+
 rem -flto / -fwhole-program
-set  optflags=-O2
+set  optflags=-O2 -march=native
 set warnflags=-Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wno-padded -Wno-missing-noreturn
 
-%gpp% -std=%std% %optflags% %warnflags% %unit_select% %unit_config% -o %unit%-main.t.exe -isystem lest -I../include %unit%-main.t.cpp %unit%.t.cpp && %unit%-main.t.exe
+%gpp% -std=%std% %optflags% %warnflags% %gcc_defines% %unit_select% %unit_config% -o %unit%-main.t.exe -isystem lest -I../include %unit%-main.t.cpp %unit%.t.cpp && %unit%-main.t.exe
 
 endlocal & goto :EOF
 

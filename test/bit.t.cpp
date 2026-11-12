@@ -245,11 +245,13 @@ CASE( "bit_repeat(): repeat bit pattern" " [bit.permute]" )
 
 CASE( "bit_compress(): pack bits" " [bit.permute]" )
 {
+    EXPECT( bit_compress( uint16_t(0xf), uint16_t(0x5) ) == 0x3 );
     EXPECT( bit_compress( uint32_t(0xf), uint32_t(0x5) ) == 0x3 );
 }
 
 CASE( "bit_expand(): distribute bits" " [bit.permute]" )
 {
+    EXPECT( bit_expand( uint16_t(0xf), uint16_t(0x5) ) == 0x5 );
     EXPECT( bit_expand( uint32_t(0xf), uint32_t(0x5) ) == 0x5 );
 }
 
@@ -259,7 +261,7 @@ CASE( "bit_expand(): distribute bits" " [bit.permute]" )
 
 CASE( "rotl(): r is 0, x; if r is positive, (x << r) | (x >> (N - r)); if r is negative, rotr(x, -r)" " [bit.rotate]" )
 {
-    uint8_t i = 29; // 0b00011101;
+    const uint8_t i = 29; // 0b00011101;
 
     EXPECT( bin(      i     ) == bin(  i ) );
     EXPECT( bin( rotl(i, 0) ) == bin( 29u) );
@@ -271,7 +273,7 @@ CASE( "rotl(): r is 0, x; if r is positive, (x << r) | (x >> (N - r)); if r is n
 
 CASE( "rotr(): r is 0, x; if r is positive, (x >> r) | (x << (N - r)); if r is negative, rotl(x, -r)" " [bit.rotate]" )
 {
-    uint8_t i = 29; // 0b00011101;
+    const uint8_t i = 29; // 0b00011101;
 
     EXPECT( bin(      i     ) == bin(  i ) );
     EXPECT( bin( rotr(i, 0) ) == bin( 29u) );

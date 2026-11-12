@@ -114,6 +114,11 @@ Define this to `bit_BIT_STD` to select C++20/C++23/C++29 standard header `<bit>`
 -D<b>bit\_CONFIG\_STRICT</b>=1  
 Define this to `1` to omit the non C++20/C++23/C++29 standard extensions. Default is undefined, which has the same effect as `0`, non-strict mode.
 
+#### Disable use of intrinsic functions
+
+-D<b>bit\_CONFIG\_NO\_BUILTINS</b>=1  
+Define this to `1` to omit the use of compiler intrinsic functions (builtins) for various operations. Default is undefined, which has the same effect as `0`, intrinsics enabled. Note: this macro has no effect on the use of `byteswap` intrinsics.
+
 ## Reported to work with
 
 TBD

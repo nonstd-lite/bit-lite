@@ -23,11 +23,13 @@ set unit_select=-D%unit%_CONFIG_SELECT_%UCAP%=%unit%_%UCAP%_DEFAULT
 set unit_config=
 
 set msvc_defines=^
+    -Dbit_CONFIG_NO_BUILTINS=0 ^
     -D_CRT_SECURE_NO_WARNINGS ^
     -D_SCL_SECURE_NO_WARNINGS
 
 set CppCoreCheckInclude=%VCINSTALLDIR%\Auxiliary\VS\include
 
+::/arch:AVX2
 cl -nologo -W3 -EHsc %std% %unit_select% %unit_config% %msvc_defines% -I"%CppCoreCheckInclude%" -Ilest -I../include -I. %unit%-main.t.cpp %unit%.t.cpp && %unit%-main.t.exe
 endlocal & goto :EOF
 

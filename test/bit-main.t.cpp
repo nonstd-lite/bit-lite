@@ -40,6 +40,22 @@ CASE( "bit-lite configuration" "[.bit][.config]" )
     bit_PRESENT( bit_CPLUSPLUS );
 }
 
+CASE( "Architecture" "[.arch]" )
+{
+    bit_PRESENT( bit_PERMUTATION_X86_BMI );
+    bit_PRESENT( bit_PERMUTATION_X86_BMI2 );
+    bit_PRESENT( bit_PERMUTATION_X86_PDEP );
+    bit_PRESENT( bit_PERMUTATION_X86_PEXT );
+    bit_PRESENT( bit_PERMUTATION_X86_RCNTZ );
+    bit_PRESENT( bit_PERMUTATION_X86_LCNTZ );
+    bit_PRESENT( bit_PERMUTATION_X86_POPCNT );
+    bit_PRESENT( bit_PERMUTATION_X86_PDEP_64 );
+    bit_PRESENT( bit_PERMUTATION_X86_PEXT_64 );
+    bit_PRESENT( bit_PERMUTATION_X86_RCNTZ_64 );
+    bit_PRESENT( bit_PERMUTATION_X86_LCNTZ_64 );
+    bit_PRESENT( bit_PERMUTATION_X86_POPCNT_64 );
+}
+
 CASE( "__cplusplus" "[.stdc++]" )
 {
     bit_PRESENT( __cplusplus );
@@ -48,6 +64,12 @@ CASE( "__cplusplus" "[.stdc++]" )
     bit_PRESENT( _MSVC_LANG );
 #else
     bit_ABSENT(  _MSVC_LANG );
+#endif
+
+#ifdef __cpp_lib_bitops
+    bit_PRESENT( __cpp_lib_bitops );
+#else
+    bit_ABSENT(  __cpp_lib_bitops );
 #endif
 }
 
