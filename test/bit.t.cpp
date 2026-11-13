@@ -245,12 +245,14 @@ CASE( "bit_repeat(): repeat bit pattern" " [bit.permute]" )
 
 CASE( "bit_compress(): pack bits" " [bit.permute]" )
 {
+    EXPECT( bit_compress( uint8_t( 0xf), uint8_t( 0x5) ) == 0x3 );
     EXPECT( bit_compress( uint16_t(0xf), uint16_t(0x5) ) == 0x3 );
     EXPECT( bit_compress( uint32_t(0xf), uint32_t(0x5) ) == 0x3 );
 }
 
 CASE( "bit_expand(): distribute bits" " [bit.permute]" )
 {
+    EXPECT( bit_expand( uint8_t( 0xf), uint8_t( 0x5) ) == 0x5 );
     EXPECT( bit_expand( uint16_t(0xf), uint16_t(0x5) ) == 0x5 );
     EXPECT( bit_expand( uint32_t(0xf), uint32_t(0x5) ) == 0x5 );
 }

@@ -833,6 +833,22 @@ bit_nodiscard bit_constexpr14 T rotr(T x, int s) bit_noexcept
 
 // 26.5.7, counting
 
+// countl_zero_impl() naive implementation:
+
+template< typename T >
+bit_nodiscard bit_constexpr14 int countl_zero_impl( T x ) bit_noexcept
+{
+    bit_constexpr int N1 = std::numeric_limits<T>::digits - 1;
+
+    int result = 0;
+    for( int i = N1; i >= 0; --i, ++result )
+    {
+        if ( 0 != (x & bitmask<T>(i)) )
+            break;
+    }
+    return result;
+}
+
 // countl_zero() built-in implementation:
 
 #if bit_PERMUTATION_X86_LCNTZ
@@ -864,7 +880,8 @@ inline /*bit_constexpr14*/ int countl_zero_bltin_( std11::uint32_t x ) bit_noexc
 #endif
 }
 
-#if bit_CPP11_OR_GREATER && bit_PERMUTATION_X86_LCNTZ_64
+#if bit_CPP11_OR_GREATER
+#if bit_PERMUTATION_X86_LCNTZ_64
 
 inline /*bit_constexpr14*/ int countl_zero_bltin_( std11::uint64_t x ) bit_noexcept
 {
@@ -876,7 +893,17 @@ inline /*bit_constexpr14*/ int countl_zero_bltin_( std11::uint64_t x ) bit_noexc
 #endif
 }
 
+#else // bit_PERMUTATION_X86_LCNTZ_64
+
+// Used with 32-bit MSVC, C++11 and later:
+
+inline /*bit_constexpr14*/ int countl_zero_bltin_( std11::uint64_t x ) bit_noexcept
+{
+    return countl_zero_impl( x );
+}
+
 #endif // bit_PERMUTATION_X86_LCNTZ_64
+#endif // bit_CPP11_OR_GREATER
 
 template< typename T >
 bit_nodiscard bit_constexpr14 int countl_zero_bltin( T x ) bit_noexcept
@@ -885,6 +912,22 @@ bit_nodiscard bit_constexpr14 int countl_zero_bltin( T x ) bit_noexcept
 }
 
 #endif // bit_PERMUTATION_X86_LCNTZ
+
+// countr_zero() naive implementation:
+
+template< typename T >
+bit_nodiscard bit_constexpr14 int countr_zero_impl( T x ) bit_noexcept
+{
+    bit_constexpr int N = std::numeric_limits<T>::digits;
+
+    int result = 0;
+    for( int i = 0; i < N; ++i, ++result )
+    {
+        if ( 0 != (x & bitmask<T>(i)) )
+            break;
+    }
+    return result;
+}
 
 // countr_zero() built-in implementation:
 
@@ -923,7 +966,8 @@ inline /*bit_constexpr14*/ int countr_zero_bltin_( std11::uint32_t x ) bit_noexc
 #endif
 }
 
-#if bit_CPP11_OR_GREATER && bit_PERMUTATION_X86_RCNTZ_64
+#if bit_CPP11_OR_GREATER
+#if bit_PERMUTATION_X86_RCNTZ_64
 
 inline /*bit_constexpr14*/ int countr_zero_bltin_( std11::uint64_t x ) bit_noexcept
 {
@@ -937,7 +981,17 @@ inline /*bit_constexpr14*/ int countr_zero_bltin_( std11::uint64_t x ) bit_noexc
 #endif
 }
 
+#else // bit_PERMUTATION_X86_RCNTZ_64
+
+// Used with 32-bit MSVC, C++11 and later:
+
+inline /*bit_constexpr14*/ int countr_zero_bltin_( std11::uint64_t x ) bit_noexcept
+{
+    return countr_zero_impl( x );
+}
+
 #endif // bit_PERMUTATION_X86_RCNTZ_64
+#endif // bit_CPP11_OR_GREATER
 
 template< typename T >
 bit_nodiscard bit_constexpr14 int countr_zero_bltin( T x ) bit_noexcept
@@ -993,20 +1047,12 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_nodiscard bit_constexpr14 int countl_zero(T x) bit_noexcept
+bit_nodiscard bit_constexpr14 int countl_zero( T x ) bit_noexcept
 {
 #if bit_PERMUTATION_X86_LCNTZ
     return countl_zero_bltin( x );
 #else
-    bit_constexpr int N1 = std::numeric_limits<T>::digits - 1;
-
-    int result = 0;
-    for( int i = N1; i >= 0; --i, ++result )
-    {
-        if ( 0 != (x & bitmask<T>(i)) )
-            break;
-    }
-    return result;
+    return countl_zero_impl( x );
 #endif
 }
 
@@ -1017,7 +1063,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_nodiscard bit_constexpr14 int countl_one(T x) bit_noexcept
+bit_nodiscard bit_constexpr14 int countl_one( T x ) bit_noexcept
 {
 #if 1
     return countl_zero( static_cast<T>( ~x ) );
@@ -1041,20 +1087,12 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_nodiscard bit_constexpr14 int countr_zero(T x) bit_noexcept
+bit_nodiscard bit_constexpr14 int countr_zero( T x ) bit_noexcept
 {
 #if bit_PERMUTATION_X86_RCNTZ
     return countr_zero_bltin( x );
 #else
-    bit_constexpr int N = std::numeric_limits<T>::digits;
-
-    int result = 0;
-    for( int i = 0; i < N; ++i, ++result )
-    {
-        if ( 0 != (x & bitmask<T>(i)) )
-            break;
-    }
-    return result;
+    return countr_zero_impl( x );
 #endif
 }
 
@@ -1065,7 +1103,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_nodiscard bit_constexpr14 int countr_one(T x) bit_noexcept
+bit_nodiscard bit_constexpr14 int countr_one( T x ) bit_noexcept
 {
 #if 1
     return countr_zero( static_cast<T>( ~x ) );
@@ -1089,7 +1127,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_nodiscard bit_constexpr14 int popcount(T x) bit_noexcept
+bit_nodiscard bit_constexpr14 int popcount( T x ) bit_noexcept
 {
 #if bit_PERMUTATION_X86_POPCNT
     return popcount_bltin( x );
@@ -1113,7 +1151,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_nodiscard bit_constexpr bool has_single_bit(T x) bit_noexcept
+bit_nodiscard bit_constexpr bool has_single_bit( T x ) bit_noexcept
 {
 #if 0
     return popcount( x ) == 1;
@@ -1129,7 +1167,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_nodiscard bit_constexpr T bit_width(T x) bit_noexcept
+bit_nodiscard bit_constexpr T bit_width( T x ) bit_noexcept
 {
     return static_cast<T>(std::numeric_limits<T>::digits - countl_zero(x) );
 }
@@ -1167,7 +1205,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_nodiscard bit_constexpr T bit_ceil(T x)
+bit_nodiscard bit_constexpr T bit_ceil( T x )
 {
     return ( x <= 1u )
 #if bit_CPP11_OR_GREATER
@@ -1184,7 +1222,7 @@ template< class T
         std11::is_unsigned<T>::value
     )
 >
-bit_nodiscard bit_constexpr T bit_floor(T x) bit_noexcept
+bit_nodiscard bit_constexpr T bit_floor( T x ) bit_noexcept
 {
     return (x != 0)
 #if bit_CPP11_OR_GREATER
