@@ -41,6 +41,8 @@ option( BIT_LITE_OPT_BUILD_EXAMPLES "Build bit-lite examples" OFF )
 option( BIT_LITE_OPT_SELECT_STD     "Select std::bit"    OFF )
 option( BIT_LITE_OPT_SELECT_NONSTD  "Select nonstd::bit" OFF )
 
+option( BIT_LITE_OPT_NO_BUILTINS    "Select portable code, no builtins" OFF )
+
 # If requested, build and perform tests, build examples:
 
 if ( BIT_LITE_OPT_BUILD_TESTS )

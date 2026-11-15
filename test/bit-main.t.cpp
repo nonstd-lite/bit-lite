@@ -42,6 +42,7 @@ CASE( "bit-lite configuration" "[.bit][.config]" )
 
 CASE( "Architecture" "[.arch]" )
 {
+#ifdef bit_PERMUTATION_X86_BMI
     bit_PRESENT( bit_PERMUTATION_X86_BMI );
     bit_PRESENT( bit_PERMUTATION_X86_BMI2 );
     bit_PRESENT( bit_PERMUTATION_X86_PDEP );
@@ -54,6 +55,9 @@ CASE( "Architecture" "[.arch]" )
     bit_PRESENT( bit_PERMUTATION_X86_RCNTZ_64 );
     bit_PRESENT( bit_PERMUTATION_X86_LCNTZ_64 );
     bit_PRESENT( bit_PERMUTATION_X86_POPCNT_64 );
+#else
+    std::cout << "(Architecture-dependent intrinsic information not available: using standard <bit>)\n";
+#endif
 }
 
 CASE( "__cplusplus" "[.stdc++]" )
