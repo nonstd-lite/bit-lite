@@ -9,7 +9,7 @@
 #ifndef NONSTD_BIT_LITE_HPP
 #define NONSTD_BIT_LITE_HPP
 
-#define bit_lite_MAJOR  2
+#define bit_lite_MAJOR  3
 #define bit_lite_MINOR  0
 #define bit_lite_PATCH  0
 
@@ -404,12 +404,7 @@ struct normalized_uint_type
 # define bit_byteswap64  __builtin_bswap64
 #endif
 
-// TODO: Compiler built-in features (non-byteswap):
-// - [x] PDEP, bit_compress() - BMI2
-// - [x] PEXT, bit_expand() - BMI2
-// - [x] POPCNT, popcount()
-// - [x] ..., countl_zero()
-// - [x] ..., countr_zero() - BMI
+// Compiler built-in features (non-byteswap):
 
 #if bit_CONFIG_NO_BUILTINS
 # define bit_PERMUTATION_X86            0
