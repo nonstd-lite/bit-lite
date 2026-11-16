@@ -81,10 +81,15 @@ jobs:
         run: ctest --output-on-failure -j 4
 
   msvc:
+    defaults:
+      run:
+        shell: bash
+
     strategy:
       fail-fast: false
       matrix:
         os: [windows-2022, windows-2025]
+        target: [native, portable]
 
     runs-on: ${{ matrix.os }}
 
@@ -92,10 +97,17 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Configure tests
-        run: cmake -S . -B build
-          -D ${{ env.PROJECT }}_OPT_SELECT_NONSTD=ON
-          -D ${{ env.PROJECT }}_OPT_BUILD_TESTS=ON
-          -D ${{ env.PROJECT }}_OPT_BUILD_EXAMPLES=OFF
+        run: |
+          OPT_NO_BUILTINS="OFF"
+          if [[ "${{ matrix.target }}" == portable ]]; then
+            OPT_NO_BUILTINS="ON"
+          fi
+
+          cmake -S . -B build                             \
+            -D ${{ env.PROJECT }}_OPT_SELECT_NONSTD=ON    \
+            -D ${{ env.PROJECT }}_OPT_BUILD_TESTS=ON      \
+            -D ${{ env.PROJECT }}_OPT_BUILD_EXAMPLES=OFF  \
+            -D ${{ env.PROJECT }}_OPT_NO_BUILTINS="$OPT_NO_BUILTINS"
 
       - name: Build tests
         run: cmake --build build --config Release -j 4
