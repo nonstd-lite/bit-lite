@@ -157,7 +157,7 @@ The [test program](test/bit.t.cpp) provides information on the compiler, the C++
 
 ### A.1 Compile-time information
 
-The version of *bit lite* is available via tag `[.version]`. The following tags are available for information on the compiler and on the C++ standard library used: `[.compiler]`, `[.stdc++]`, `[.stdlanguage]` and `[.stdlibrary]`.
+The version of *bit lite* is available via tag `[.version]`. The following tags are available for information on the compiler and on the C++ standard library used: `[.compiler]`, `[.arch]`, `[.stdc++]`, `[.stdlanguage]` and `[.stdlibrary]`.
 
 ### A.2 Bit lite test specification
 
