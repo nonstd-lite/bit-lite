@@ -47,9 +47,9 @@
 #endif
 
 #if bit_CONFIG_NO_BUILTINS
-# pragma message("bit.hpp: Note: Using portable code (no platform-dependent builtins).")
+// # pragma message("bit.hpp: Note: Using portable code (no platform-dependent builtins).")
 #else
-# pragma message("bit.hpp: Note: Using platform-dependent builtins.")
+// # pragma message("bit.hpp: Note: Using platform-dependent builtins.")
 #endif
 
 // C++ language version detection (C++23 is speculative):
